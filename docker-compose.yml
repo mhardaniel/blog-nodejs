@@ -1,0 +1,31 @@
+version: '3'
+services:
+    web:
+        build: .
+        volumes:
+            - ./:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 8080:8080
+        depends_on:
+            - mongo
+        networks:
+            - nodeapp-network
+
+    mongo:
+        image: mongo:latest
+        # volumes:
+        #     - mongo_data:/data/db
+        #     - mongodb_config:/data/configdb
+        ports:
+            - 27017:27017
+        networks:
+            - nodeapp-network
+
+# volumes:
+#     mongo_data:
+#     mongodb_config:
+
+networks:
+    nodeapp-network:
+        driver: bridge
